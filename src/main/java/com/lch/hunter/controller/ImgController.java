@@ -21,7 +21,7 @@ public class ImgController {
     private ImgMapper imgMapper;
 
     // 直接依据图片id查询图片
-    @GetMapping("/Img/{id}")
+    @GetMapping("/img/{id}")
     public String getImgById(@PathVariable int id){
         Img thisImg = imgMapper.selectById(id);
         System.out.println(id);
@@ -41,8 +41,8 @@ public class ImgController {
     // 图片需要随机重命名
     @PostMapping("/img")
     public String save(Img img, MultipartFile photo, HttpServletRequest request) throws IOException{
-        // 图片存到 "/img/requireid/"
-        String path = request.getServletContext().getRealPath("/img/" + img.getRequireid());
+        // 图片存到 "/img_file/requireid/"
+        String path = request.getServletContext().getRealPath("/img_file/" + img.getRequireid() + "/");
         img.setImgpath(path + photo.getOriginalFilename());
         saveFile(photo, path);
         int indicator = imgMapper.insert(img);
@@ -64,7 +64,7 @@ public class ImgController {
     private void saveFile(MultipartFile photo, String path) throws IOException {
         File dir = new File(path);
         if(!dir.exists()){
-            dir.mkdir();
+            dir.mkdirs();
         }
         File file = new File(path + photo.getOriginalFilename());
         photo.transferTo(file);
