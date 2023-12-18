@@ -47,7 +47,7 @@ public class ImgController {
         saveFile(photo, path);
         int indicator = imgMapper.insert(img);
         if(indicator>0){
-            return img.getImgpath(); // 返回路径.
+            return img.getImgpath(); // 返回路径
         }else{
             return "fail!\n";
         }
