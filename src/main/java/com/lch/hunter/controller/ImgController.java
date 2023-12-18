@@ -6,8 +6,12 @@ import com.lch.hunter.entity.Requires;
 import com.lch.hunter.mapper.ImgMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.awt.font.ImageGraphicAttribute;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -32,9 +36,15 @@ public class ImgController {
         return imgMapper.selectList(queryWrapper);
     }
 
-    // 上传图片(requireid和图片对应的逻辑由前端实现)
+    // 上传图片
+    // 前端需要传的参数：requireid，imgid，photo。参数imgpath为空即可，由后端分配
+    // 图片需要随机重命名
     @PostMapping("/img")
-    public String save(Img img){
+    public String save(Img img, MultipartFile photo, HttpServletRequest request) throws IOException{
+        // 图片存到 "/img/requireid/"
+        String path = request.getServletContext().getRealPath("/img/" + img.getRequireid());
+        img.setImgpath(path + photo.getOriginalFilename());
+        saveFile(photo, path);
         int indicator = imgMapper.insert(img);
         if(indicator>0){
             return img.getImgpath(); // 返回路径
@@ -49,5 +59,14 @@ public class ImgController {
     public String deleteImgById(@PathVariable int id) {
         imgMapper.deleteById(id);
         return "Img " + id + " 已删除";
+    }
+
+    private void saveFile(MultipartFile photo, String path) throws IOException {
+        File dir = new File(path);
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+        File file = new File(path + photo.getOriginalFilename());
+        photo.transferTo(file);
     }
 }
