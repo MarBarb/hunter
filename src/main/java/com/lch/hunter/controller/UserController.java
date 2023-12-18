@@ -1,0 +1,66 @@
+package com.lch.hunter.controller;
+
+import com.lch.hunter.entity.User;
+import com.lch.hunter.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Objects;
+
+@RestController
+public class UserController {
+    @Autowired
+    private UserMapper userMapper;
+
+    // 查询所有用户
+    @GetMapping("/user")
+    public List query(){
+        List<User> list = userMapper.selectList(null);
+        System.out.println(list);
+        return list; // 自动转换为json
+    }
+
+    // 添加用户(注册)
+    @PostMapping("/user")
+    public String save(User user){
+        int indicator = userMapper.insert(user);
+        if(indicator>0){
+            return "success\n";
+        }else{
+            return "fail!\n";
+        }
+    }
+
+    // 依据id查询user
+    @GetMapping("/user/{id}")
+    public String getUserById(@PathVariable int id){
+        User thisUser = userMapper.selectById(id);
+        System.out.println(id);
+        return thisUser.toString(); // 自动转换为json
+    }
+
+    // 依据id修改信息(暂时无法修改密码)
+    @PutMapping("/user/{id}")
+    public String update(@PathVariable int id, String username, String userdepartment, String usersemester){
+        User newUserInfo = userMapper.selectById(id);
+        if(!Objects.equals(username, "")){
+            newUserInfo.setUsername(username);
+        }
+        if(!Objects.equals(userdepartment, "")){
+            newUserInfo.setUserdepartment(userdepartment);
+        }
+        if(!Objects.equals(usersemester, "")){
+            newUserInfo.setUsersemester(usersemester);
+        }
+        userMapper.updateById(newUserInfo);
+        return newUserInfo.toString();
+    }
+
+    // 依据id删除user(注销)
+    @DeleteMapping("/user/{id}")
+    public String deleteUserById(@PathVariable int id) {
+        userMapper.deleteById(id);
+        return "User " + id + " 已删除";
+    }
+}
