@@ -21,7 +21,7 @@ public class ImgController {
     public String getImgById(@PathVariable int id){
         Img thisImg = imgMapper.selectById(id);
         System.out.println(id);
-        return thisImg.toString(); // 其中包含图片路径
+        return thisImg.getImgpath(); // 返回图片路径
     }
 
     // 依据requireid查询图片
@@ -37,7 +37,7 @@ public class ImgController {
     public String save(Img img){
         int indicator = imgMapper.insert(img);
         if(indicator>0){
-            return "success\n";
+            return img.getImgpath(); // 返回路径
         }else{
             return "fail!\n";
         }
