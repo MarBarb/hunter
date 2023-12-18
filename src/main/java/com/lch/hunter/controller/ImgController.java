@@ -39,10 +39,11 @@ public class ImgController {
     // 上传图片
     // 前端需要传的参数：requireid，imgid，photo。参数imgpath为空即可，由后端分配
     // 图片需要随机重命名
+    // 图片上传完后，浏览器输入这个路径可以访问到图片源文件："localhost/requires/requireid/filename",如"localhost/requires/3/test1.jpg"
     @PostMapping("/img")
     public String save(Img img, MultipartFile photo, HttpServletRequest request) throws IOException{
         // 图片存到 "/img_file/requireid/"
-        String path = request.getServletContext().getRealPath("/img_file/" + img.getRequireid() + "/");
+        String path = request.getServletContext().getRealPath("/img_file/requires/" + img.getRequireid() + "/");
         img.setImgpath(path + photo.getOriginalFilename());
         saveFile(photo, path);
         int indicator = imgMapper.insert(img);
