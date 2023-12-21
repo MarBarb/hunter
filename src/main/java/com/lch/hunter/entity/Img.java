@@ -3,6 +3,7 @@ package com.lch.hunter.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @TableName("hunter_img")
 public class Img {
@@ -41,12 +42,13 @@ public class Img {
         this.imgpath = imgpath;
     }
 
+
     @Override
     public String toString() {
-        return "Img{" +
-                "imgid=" + imgid +
-                ", requireid=" + requireid +
-                ", imgpath='" + imgpath + '\'' +
-                '}';
+        return new ToStringBuilder(this)
+                .append("imgid", imgid)
+                .append("requireid", requireid)
+                .append("imgpath", imgpath)
+                .toString();
     }
 }

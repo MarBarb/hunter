@@ -91,17 +91,18 @@ public class Requires {
         this.status = status;
     }
 
+
     @Override
     public String toString() {
-        return "Requires{" +
-                "userid=" + userid +
-                ", requireid=" + requireid +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", reward='" + reward + '\'' +
-                ", createtime='" + createtime + '\'' +
-                ", endtime='" + endtime + '\'' +
-                ", status='" + status + '\'' +
-                '}';
+        return new org.apache.commons.lang3.builder.ToStringBuilder(this)
+                .append("userid", userid)
+                .append("requireid", requireid)
+                .append("title", title)
+                .append("description", description)
+                .append("reward", reward)
+                .append("createtime", createtime)
+                .append("endtime", endtime)
+                .append("status", status)
+                .toString();
     }
 }

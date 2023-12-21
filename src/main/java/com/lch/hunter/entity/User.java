@@ -3,6 +3,7 @@ package com.lch.hunter.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @TableName("hunter_user")
 public class User {
@@ -61,14 +62,15 @@ public class User {
         this.usersemester = usersemester;
     }
 
+
     @Override
     public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", userid='" + userid + '\'' +
-                ", password='" + password + '\'' +
-                ", userdepartment='" + userdepartment + '\'' +
-                ", usersemester='" + usersemester + '\'' +
-                '}';
+        return new ToStringBuilder(this)
+                .append("username", username)
+                .append("userid", userid)
+                .append("password", password)
+                .append("userdepartment", userdepartment)
+                .append("usersemester", usersemester)
+                .toString();
     }
 }
