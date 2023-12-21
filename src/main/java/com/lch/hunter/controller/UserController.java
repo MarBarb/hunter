@@ -1,17 +1,27 @@
 package com.lch.hunter.controller;
 
+import com.lch.hunter.entity.Requires;
 import com.lch.hunter.entity.User;
 import com.lch.hunter.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+
+import static org.apache.tomcat.util.http.fileupload.FileUtils.deleteDirectory;
 
 @RestController
 public class UserController {
     @Autowired
     private UserMapper userMapper;
+    private RequireController requireController;
+
+    public UserController(RequireController requireController) {
+        this.requireController = requireController;
+    }
 
     // 查询所有用户
     @GetMapping("/user")
@@ -60,6 +70,17 @@ public class UserController {
     // 依据id删除user(注销)
     @DeleteMapping("/user/{id}")
     public String deleteUserById(@PathVariable int id) {
+        List<Requires> list = requireController.getRequireByUser(id);
+        if(!list.isEmpty()){
+            list.forEach(item->
+            {
+                try {
+                    requireController.deleteRequireById(item.getRequireid());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
         userMapper.deleteById(id);
         return "User " + id + " 已删除";
     }

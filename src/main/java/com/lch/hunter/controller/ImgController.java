@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.awt.font.ImageGraphicAttribute;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
+
+import static org.apache.tomcat.util.http.fileupload.FileUtils.deleteDirectory;
 
 @RestController
 public class ImgController {
@@ -22,7 +25,7 @@ public class ImgController {
 
     // 直接依据图片id查询图片
     @GetMapping("/img/{id}")
-    public String getImgById(@PathVariable int id){
+    public String getImgById(@PathVariable int id) {
         Img thisImg = imgMapper.selectById(id);
         System.out.println(id);
         return thisImg.getImgpath(); // 返回图片路径
@@ -30,7 +33,7 @@ public class ImgController {
 
     // 依据requireid查询图片
     @GetMapping("/require/{id}/img")
-    public List<Img> getImgByRequire(@PathVariable int id){
+    public List<Img> getImgByRequire(@PathVariable int id) {
         QueryWrapper<Img> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("requireid", id);
         return imgMapper.selectList(queryWrapper);
@@ -42,33 +45,38 @@ public class ImgController {
     // 图片上传完后，浏览器输入这个路径可以访问到图片源文件："localhost/requires/requireid/filename",如"localhost/requires/3/test1.jpg"
     // 本地服务器会经常变化，上传完后必须马上get才能访问。项目上线后不会出现此问题
     @PostMapping("/img")
-    public String save(Img img, MultipartFile photo, HttpServletRequest request) throws IOException{
+    public String save(Img img, MultipartFile photo, HttpServletRequest request) throws IOException {
         // 图片存到 "/img_file/requireid/"
         String path = request.getServletContext().getRealPath("/img_file/requires/" + img.getRequireid() + "/");
         img.setImgpath(path + photo.getOriginalFilename());
         saveFile(photo, path);
         int indicator = imgMapper.insert(img);
-        if(indicator>0){
+        if (indicator > 0) {
             return img.getImgpath(); // 返回路径.
-        }else{
+        } else {
             return "fail!\n";
         }
     }
 
-    // 依据id删除图片(目前仅仅是在数据库内删除，后续补充实际删除图片文件)
-    // 删除requires时，其包含的图片会在**数据库**内级联删除
+    // 依据id删除图片
+    // 删除requires时，其包含的图片会在数据库内级联删除，同时存储此require的图片的整个目录也会被删除
     @DeleteMapping("/img/{id}")
-    public String deleteImgById(@PathVariable int id) {
+    public String deleteImgById(@PathVariable int id) throws IOException {
+        Img img = imgMapper.selectById(id);
+        String path = img.getImgpath();
+        File file = new File(path);
+        file.delete();
         imgMapper.deleteById(id);
         return "Img " + id + " 已删除";
     }
 
     private void saveFile(MultipartFile photo, String path) throws IOException {
         File dir = new File(path);
-        if(!dir.exists()){
+        if (!dir.exists()) {
             dir.mkdirs();
         }
         File file = new File(path + photo.getOriginalFilename());
         photo.transferTo(file);
     }
+
 }
