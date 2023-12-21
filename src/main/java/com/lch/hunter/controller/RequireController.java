@@ -3,6 +3,7 @@ package com.lch.hunter.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lch.hunter.entity.Img;
 import com.lch.hunter.entity.Requires;
+import com.lch.hunter.entity.User;
 import com.lch.hunter.mapper.RequireMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +24,23 @@ public class RequireController {
         this.imgController = imgController;
     }
 
+    // 查询所有require
+    @GetMapping("/require")
+    public List<Requires> query(){
+        return requireMapper.selectList(null); // 自动转换为json
+    }
+
+    // 查询指定个数require
+    @GetMapping("/require/number/{num}")
+    public List<Requires> query_fornum(@PathVariable int num){
+        List<Requires> list = requireMapper.selectList(null);
+        return list.subList(0, num);
+    }
+
     // 依据requireid查询require
     @GetMapping("/require/{id}")
     public String getRequireById(@PathVariable int id){
         Requires thisRequire = requireMapper.selectById(id);
-        System.out.println(id);
         return thisRequire.toString(); // 自动转换为json
     }
 

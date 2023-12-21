@@ -25,10 +25,8 @@ public class UserController {
 
     // 查询所有用户
     @GetMapping("/user")
-    public List query(){
-        List<User> list = userMapper.selectList(null);
-        System.out.println(list);
-        return list; // 自动转换为json
+    public List<User> query(){
+        return userMapper.selectList(null); // 自动转换为json
     }
 
     // 添加用户(注册)
