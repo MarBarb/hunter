@@ -10,12 +10,12 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class User {
     private String username;
     @TableId(type= IdType.AUTO)
-    private String userid;
+    private int userid;
     private String password;
     private String userdepartment;
     private String usersemester;
 
-    public User(String username, String userid, String password, String userdepartment, String usersemester) {
+    public User(String username, int userid, String password, String userdepartment, String usersemester) {
         this.username = username;
         this.userid = userid;
         this.password = password;
@@ -31,11 +31,11 @@ public class User {
         this.username = username;
     }
 
-    public String getUserid() {
+    public int getUserid() {
         return userid;
     }
 
-    public void setUserid(String userid) {
+    public void setUserid(int userid) {
         this.userid = userid;
     }
 

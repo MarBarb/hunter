@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+import static java.sql.Types.NULL;
 import static org.apache.tomcat.util.http.fileupload.FileUtils.deleteDirectory;
 
 @RestController
@@ -47,7 +48,13 @@ public class ImgController {
     @PostMapping("/img")
     public String save(Img img, MultipartFile photo, HttpServletRequest request) throws IOException {
         // 图片存到 "/img_file/requireid/"
-        String path = request.getServletContext().getRealPath("/img_file/requires/" + img.getRequireid() + "/");
+        String path = null;
+        if(img.getUserid() == NULL){
+            path = request.getServletContext().getRealPath("/img_file/requires/" + img.getRequireid() + "/");
+        }
+        else{
+            path = request.getServletContext().getRealPath("/img_file/user/" + img.getUserid() + "/");
+        }
         img.setImgpath(path + photo.getOriginalFilename());
         saveFile(photo, path);
         int indicator = imgMapper.insert(img);
