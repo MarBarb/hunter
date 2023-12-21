@@ -37,7 +37,7 @@ public class ImgController {
     }
 
     // 上传图片
-    // 前端需要传的参数：requireid，imgid，photo。参数imgpath为空即可，由后端分配
+    // 前端需要传的参数：requireid，imgid，photo（from-data形式）。参数imgpath为空即可，由后端分自动填写
     // 图片需要随机重命名
     // 图片上传完后，浏览器输入这个路径可以访问到图片源文件："localhost/requires/requireid/filename",如"localhost/requires/3/test1.jpg"
     @PostMapping("/img")
