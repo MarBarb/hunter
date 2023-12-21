@@ -3,6 +3,7 @@ package com.lch.hunter.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 @TableName("hunter_requires")
 public class Requires {
@@ -94,7 +95,7 @@ public class Requires {
 
     @Override
     public String toString() {
-        return new org.apache.commons.lang3.builder.ToStringBuilder(this)
+        return new org.apache.commons.lang3.builder.ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("userid", userid)
                 .append("requireid", requireid)
                 .append("title", title)
