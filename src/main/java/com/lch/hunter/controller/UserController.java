@@ -1,8 +1,10 @@
 package com.lch.hunter.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.lch.hunter.entity.Requires;
 import com.lch.hunter.entity.User;
 import com.lch.hunter.mapper.UserMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,16 @@ public class UserController {
     @PostMapping("/user")
     public String save(User user){
         int indicator = userMapper.insert(user);
+        if(indicator>0){
+            return "success\n";
+        }else{
+            return "fail!\n";
+        }
+    }
+
+    @PutMapping("/user/modify")
+    public String modify(User user){
+        int indicator = userMapper.updateById(user);
         if(indicator>0){
             return "success\n";
         }else{

@@ -14,6 +14,8 @@ import java.util.List;
 
 import static org.apache.tomcat.util.http.fileupload.FileUtils.deleteDirectory;
 
+
+
 @RestController
 public class RequireController {
     @Autowired
@@ -32,7 +34,7 @@ public class RequireController {
 
     // 查询指定个数require
     @GetMapping("/require/number/{num}")
-    public List<Requires> query_fornum(@PathVariable int num){
+    public List<Requires> query_fornum(@PathVariable int num) {
         List<Requires> list = requireMapper.selectList(null);
         return list.subList(0, num);
     }
@@ -56,6 +58,15 @@ public class RequireController {
     @PostMapping("/require")
     public String save(Requires requires){
         int indicator = requireMapper.insert(requires);
+        if(indicator>0){
+            return "success\n";
+        }else{
+            return "fail!\n";
+        }
+    }
+    @PutMapping("/require/modify")
+    public String modify(Requires require){
+        int indicator = requireMapper.updateById(require);
         if(indicator>0){
             return "success\n";
         }else{
