@@ -1,10 +1,13 @@
 package com.lch.hunter.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.util.List;
 
 @TableName("hunter_user")
 public class User {
@@ -14,6 +17,11 @@ public class User {
     private String password;
     private String userdepartment;
     private String usersemester;
+
+
+    public User(){
+
+    }
 
     public User(String username, int userid, String password, String userdepartment, String usersemester) {
         this.username = username;
