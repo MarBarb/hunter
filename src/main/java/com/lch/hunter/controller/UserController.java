@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -33,13 +35,9 @@ public class UserController {
 
     // 添加用户(注册)
     @PostMapping("/user")
-    public String save(User user){
-        int indicator = userMapper.insert(user);
-        if(indicator>0){
-            return "success\n";
-        }else{
-            return "fail!\n";
-        }
+    public User save(User user) {
+        userMapper.insert(user);
+        return user;
     }
 
     @PutMapping("/user/modify")
@@ -54,10 +52,8 @@ public class UserController {
 
     // 依据id查询user
     @GetMapping("/user/{id}")
-    public String getUserById(@PathVariable int id){
-        User thisUser = userMapper.selectById(id);
-        System.out.println(id);
-        return thisUser.toString(); // 自动转换为json
+    public User getUserById(@PathVariable int id){
+        return userMapper.selectById(id); // 自动转换为json
     }
 
     // 依据id修改信息(暂时无法修改密码)
