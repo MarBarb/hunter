@@ -58,7 +58,7 @@ public class UserController {
 
     // 依据id修改信息(暂时无法修改密码)
     @PutMapping("/user/{id}")
-    public String update(@PathVariable int id, String username, String userdepartment, String usersemester){
+    public User update(@PathVariable int id, String username, String userdepartment, String usersemester){
         User newUserInfo = userMapper.selectById(id);
         if(!Objects.equals(username, "")){
             newUserInfo.setUsername(username);
@@ -70,7 +70,7 @@ public class UserController {
             newUserInfo.setUsersemester(usersemester);
         }
         userMapper.updateById(newUserInfo);
-        return newUserInfo.toString();
+        return newUserInfo;
     }
 
     // 依据id删除user(注销)
