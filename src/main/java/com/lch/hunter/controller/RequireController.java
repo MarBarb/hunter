@@ -1,9 +1,10 @@
 package com.lch.hunter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lch.hunter.entity.Img;
 import com.lch.hunter.entity.Requires;
-import com.lch.hunter.entity.User;
 import com.lch.hunter.mapper.RequireMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,11 +33,11 @@ public class RequireController {
         return requireMapper.selectList(null); // 自动转换为json
     }
 
-    // 查询指定个数require
-    @GetMapping("/require/number/{num}")
-    public List<Requires> query_fornum(@PathVariable int num) {
-        List<Requires> list = requireMapper.selectList(null);
-        return list.subList(0, num);
+    // 分页查询require
+    @GetMapping("/require/findByPage")
+    public IPage findByPage() {
+        Page<Requires> page = new Page<>(0, 10); // 每页10条
+        return requireMapper.selectPage(page, null);
     }
 
     // 依据requireid查询require

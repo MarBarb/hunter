@@ -1,6 +1,8 @@
 package com.lch.hunter.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lch.hunter.entity.Requires;
 import com.lch.hunter.entity.User;
 import com.lch.hunter.mapper.UserMapper;
