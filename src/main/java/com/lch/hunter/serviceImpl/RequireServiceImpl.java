@@ -25,4 +25,37 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
         // 调用 MyBatis-Plus 分页查询方法
         return baseMapper.selectPage(page, queryWrapper);
     }
+
+    @Override
+    public Page<Requires> getRequiresByUserOrderByCreateTime(int pageNum, int pageSize) {
+        return null;
+    }
+
+    public Page<Requires> getRequiresByUserOrderByCreateTime(int pageNum, int pageSize, int userid) {
+
+        Page<Requires> page = new Page<Requires>(pageNum, pageSize);
+
+        // 创建查询条件构造
+        QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userid", userid);
+        queryWrapper.orderByDesc("createtime"); // 按照发帖时间由近到远排序
+        queryWrapper.ge("endtime", new Date()); // 超出endtime的帖子会被剔除
+
+        // 调用 MyBatis-Plus 分页查询方法
+        return baseMapper.selectPage(page, queryWrapper);
+    }
+
+
+    public Page<Requires> getRequiresByUserOrderByCreateTimeWithOutDate(int pageNum, int pageSize, int userid) {
+
+        Page<Requires> page = new Page<Requires>(pageNum, pageSize);
+
+        // 创建查询条件构造
+        QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userid", userid);
+        queryWrapper.orderByDesc("createtime"); // 按照发帖时间由近到远排序
+
+        // 调用 MyBatis-Plus 分页查询方法
+        return baseMapper.selectPage(page, queryWrapper);
+    }
 }
