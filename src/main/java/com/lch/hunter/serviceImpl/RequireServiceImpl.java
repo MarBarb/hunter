@@ -15,7 +15,7 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
     @Override
     public Page<Requires> getRequiresOrderByCreateTime(int pageNum, int pageSize){
         // 创建分页对象
-        Page<Requires> page = new Page<Requires>(pageNum, pageSize);
+        Page<Requires> page = new Page<>(pageNum, pageSize);
 
         // 创建查询条件构造器
         QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
@@ -28,7 +28,7 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
 
     public Page<Requires> getRequiresByUserOrderByCreateTime(int pageNum, int pageSize, int userid) {
 
-        Page<Requires> page = new Page<Requires>(pageNum, pageSize);
+        Page<Requires> page = new Page<>(pageNum, pageSize);
 
         // 创建查询条件构造
         QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
@@ -43,7 +43,7 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
 
     public Page<Requires> getRequiresByUserOrderByCreateTimeWithOutDate(int pageNum, int pageSize, int userid) {
 
-        Page<Requires> page = new Page<Requires>(pageNum, pageSize);
+        Page<Requires> page = new Page<>(pageNum, pageSize);
 
         // 创建查询条件构造
         QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();

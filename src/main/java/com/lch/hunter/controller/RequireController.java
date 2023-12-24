@@ -69,7 +69,7 @@ public class RequireController {
     }
 
     // 依据用户id查询其发布的所有requires(不分页，不按时间)(**此接口仅留给后端用**)
-    @GetMapping("/require/findByUser/{id}")
+    // @GetMapping("/require/findByUser/{id}")
     public List<Requires> getRequireByUser(@PathVariable int id){
         QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userid", id);
