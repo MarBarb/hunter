@@ -59,16 +59,16 @@ public class RequireController {
     // 依据用户id查询其发布的所有requires(分页，按时间，去除过期)(用于其他用户查看某个用户发布过的require)
     @GetMapping("/require/findByUser/{userid}/{pageNum}")
     public IPage getRequireByUserByPage(@PathVariable int userid, @PathVariable int pageNum){
-        return requireService.getRequiresByUserOrderByCreateTime(pageNum, 2, userid);
+        return requireService.getRequiresByUserOrderByCreateTime(pageNum, 10, userid);
     }
 
     // 依据用户id查询其发布的所有requires(分页，按时间，不去除过期)(用于用户查看自己发布过的require)
     @GetMapping("/require/findByUserSelf/{userid}/{pageNum}")
     public IPage getRequireByUserByPageWithOutDate(@PathVariable int userid, @PathVariable int pageNum){
-        return requireService.getRequiresByUserOrderByCreateTimeWithOutDate(pageNum, 2, userid);
+        return requireService.getRequiresByUserOrderByCreateTimeWithOutDate(pageNum, 10, userid);
     }
 
-    // 依据用户id查询其发布的所有requires(分页，按时间)
+    // 依据用户id查询其发布的所有requires(不分页，不按时间)(**此接口仅留给后端用**)
     @GetMapping("/require/findByUser/{id}")
     public List<Requires> getRequireByUser(@PathVariable int id){
         QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
