@@ -2,21 +2,17 @@ package com.lch.hunter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lch.hunter.entity.Img;
-import com.lch.hunter.entity.Requires;
 import com.lch.hunter.mapper.ImgMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.awt.font.ImageGraphicAttribute;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
 
 import static java.sql.Types.NULL;
-import static org.apache.tomcat.util.http.fileupload.FileUtils.deleteDirectory;
 
 @RestController
 public class ImgController {

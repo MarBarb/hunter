@@ -1,23 +1,15 @@
 package com.lch.hunter.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lch.hunter.entity.Requires;
 import com.lch.hunter.entity.User;
 import com.lch.hunter.mapper.UserMapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import static org.apache.tomcat.util.http.fileupload.FileUtils.deleteDirectory;
 
 @RestController
 public class UserController {

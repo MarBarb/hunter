@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lch.hunter.entity.Img;
 import com.lch.hunter.entity.Requires;
 import com.lch.hunter.mapper.RequireMapper;
+import com.lch.hunter.serviceImpl.RequireServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +23,11 @@ public class RequireController {
     @Autowired
     private RequireMapper requireMapper;
     private ImgController imgController;
+    private RequireServiceImpl requireService;
 
-    public RequireController(ImgController imgController) {
+    public RequireController(ImgController imgController, RequireServiceImpl requireService) {
         this.imgController = imgController;
+        this.requireService = requireService;
     }
 
     // 查询所有require
@@ -33,11 +36,17 @@ public class RequireController {
         return requireMapper.selectList(null); // 自动转换为json
     }
 
-    // 分页查询require
-    @GetMapping("/require/findByPage")
-    public IPage findByPage() {
-        Page<Requires> page = new Page<>(0, 10); // 每页10条
+    // 分页按序号顺序查询require
+    @GetMapping("/require/findByPage/{pageNum}")
+    public IPage findByPage(@PathVariable int pageNum) {
+        Page<Requires> page = new Page<>(pageNum, 10); // 每页10条
         return requireMapper.selectPage(page, null);
+    }
+
+    // 分页按创建时间由晚到早查询require
+    @GetMapping("/require/findByCreateTime/{pageNum}")
+    public IPage findByCreatTime(@PathVariable int pageNum){
+        return requireService.getRequiresOrderByCreateTime(pageNum, 2);
     }
 
     // 依据requireid查询require
