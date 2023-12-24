@@ -7,7 +7,5 @@ import com.lch.hunter.entity.Requires;
 public interface RequireService extends IService<Requires> {
     Page<Requires> getRequiresOrderByCreateTime(int pageNum, int pageSize);
 
-    Page<Requires> getRequiresByUserOrderByCreateTime(int pageNum, int pageSize);
-
     Page<Requires> getRequiresByUserOrderByCreateTime(int pageNum, int pageSize, int userid);
 }

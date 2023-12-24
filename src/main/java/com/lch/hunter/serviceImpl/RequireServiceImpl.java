@@ -26,11 +26,6 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
         return baseMapper.selectPage(page, queryWrapper);
     }
 
-    @Override
-    public Page<Requires> getRequiresByUserOrderByCreateTime(int pageNum, int pageSize) {
-        return null;
-    }
-
     public Page<Requires> getRequiresByUserOrderByCreateTime(int pageNum, int pageSize, int userid) {
 
         Page<Requires> page = new Page<Requires>(pageNum, pageSize);
