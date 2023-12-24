@@ -24,12 +24,12 @@ public class SearchController {
     @GetMapping("/search/require/{pageNum}") // localhost/search/require/1?keyword=博雅楼
     public Page<Requires> searchRequire(@RequestParam String keyword,
                                       @PathVariable int pageNum) {
-        return requireService.searchRequireByDescription(keyword, pageNum, 1);
+        return requireService.searchRequireByDescription(keyword, pageNum, 10);
     }
 
     @GetMapping("/search/user/{pageNum}") // localhost/search/user/1?keyword=Admin_1
     public Page<User> searchUser(@RequestParam String keyword,
                                  @PathVariable int pageNum) {
-        return userService.searchUserByUsername(keyword, pageNum, 1);
+        return userService.searchUserByUsername(keyword, pageNum, 10);
     }
 }
