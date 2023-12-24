@@ -47,25 +47,25 @@ public class RequireController {
     // 分页按创建时间由晚到早查询require(去除过期require)
     @GetMapping("/require/findByCreateTime/{pageNum}")
     public IPage findByCreateTimeByPage(@PathVariable int pageNum){
-        return requireService.getRequiresOrderByCreateTime(pageNum, 10);
+        return requireService.getRequiresOrderByCreateTime(pageNum, 1);
     }
 
     // 分页按截止时间由早到晚查询require(去除过期require)
     @GetMapping("/require/findByEndTime/{pageNum}")
     public IPage findByEndTimeByPage(@PathVariable int pageNum){
-        return requireService.getRequiresOrderByEndTime(pageNum, 10);
+        return requireService.getRequiresOrderByEndTime(pageNum, 1);
     }
 
     // 分页按reward由大到小查询require(去除过期require)
     @GetMapping("/require/findByRewardDesc/{pageNum}")
     public IPage findByRewardByDescByPage(@PathVariable int pageNum){
-        return requireService.getRequiresOrderByRewardDesc(pageNum, 10);
+        return requireService.getRequiresOrderByRewardDesc(pageNum, 1);
     }
 
     // 分页按reward由小到大查询require(去除过期require)
     @GetMapping("/require/findByRewardAsc/{pageNum}")
     public IPage findByRewardByAscByPage(@PathVariable int pageNum){
-        return requireService.getRequiresOrderByRewardAsc(pageNum, 10);
+        return requireService.getRequiresOrderByRewardAsc(pageNum, 1);
     }
 
     // 依据requireid查询require
