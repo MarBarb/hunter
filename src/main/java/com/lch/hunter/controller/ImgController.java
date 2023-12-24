@@ -21,6 +21,7 @@ public class ImgController {
     private ImgMapper imgMapper;
 
     // 直接依据图片id查询图片
+    @GetMapping("/img/{id}")
     public String getImgById(@PathVariable int id) {
         Img thisImg = imgMapper.selectById(id);
         System.out.println(id);
@@ -28,6 +29,7 @@ public class ImgController {
     }
 
     // 依据requireid查询图片
+    @GetMapping("/require/{id}/img")
     public List<Img> getImgByRequire(@PathVariable int id) {
         QueryWrapper<Img> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("requireid", id);

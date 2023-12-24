@@ -22,6 +22,7 @@ public class UserController {
     }
 
     // 查询所有用户
+    @GetMapping("/user")
     public List<User> query(){
         return userMapper.selectList(null); // 自动转换为json
     }
@@ -44,6 +45,7 @@ public class UserController {
     }
 
     // 依据id查询user
+    @GetMapping("/user/{id}")
     public User getUserById(@PathVariable int id){
         return userMapper.selectById(id); // 自动转换为json
     }
