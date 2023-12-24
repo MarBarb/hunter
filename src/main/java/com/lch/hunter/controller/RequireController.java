@@ -45,8 +45,14 @@ public class RequireController {
 
     // 分页按创建时间由晚到早查询require
     @GetMapping("/require/findByCreateTime/{pageNum}")
-    public IPage findByCreatTimeByPage(@PathVariable int pageNum){
+    public IPage findByCreateTimeByPage(@PathVariable int pageNum){
         return requireService.getRequiresOrderByCreateTime(pageNum, 10);
+    }
+
+    // 分页按截止时间由早到晚查询require
+    @GetMapping("/require/findByEndTime/{pageNum}")
+    public IPage findByEndTimeByPage(@PathVariable int pageNum){
+        return requireService.getRequiresOrderByEndTime(pageNum, 10);
     }
 
     // 依据requireid查询require
