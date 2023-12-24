@@ -32,7 +32,34 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
 
         // 创建查询条件构造器
         QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByAsc("endtime"); // 按照发帖时间由近到远排序
+        queryWrapper.orderByAsc("endtime"); // 按照endtime由近到远排序
+        queryWrapper.ge("endtime", new Date()); // 超出endtime的帖子会被剔除
+
+        // 调用 MyBatis-Plus 分页查询方法
+        return baseMapper.selectPage(page, queryWrapper);
+    }
+
+    public Page<Requires> getRequiresOrderByRewardDesc(int pageNum, int pageSize){
+        // 创建分页对象
+        Page<Requires> page = new Page<>(pageNum, pageSize);
+
+        // 创建查询条件构造器
+        QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("reward"); // 按照reward从大到小排序
+        queryWrapper.ge("endtime", new Date()); // 超出endtime的帖子会被剔除
+
+        // 调用 MyBatis-Plus 分页查询方法
+        return baseMapper.selectPage(page, queryWrapper);
+    }
+
+
+    public Page<Requires> getRequiresOrderByRewardAsc(int pageNum, int pageSize){
+        // 创建分页对象
+        Page<Requires> page = new Page<>(pageNum, pageSize);
+
+        // 创建查询条件构造器
+        QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc("reward"); // 按照reward从小到大排序
         queryWrapper.ge("endtime", new Date()); // 超出endtime的帖子会被剔除
 
         // 调用 MyBatis-Plus 分页查询方法

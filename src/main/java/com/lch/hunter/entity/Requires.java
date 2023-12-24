@@ -12,12 +12,12 @@ public class Requires {
     private int requireid;
     private String title;
     private String description;
-    private String reward;
+    private Float reward;
     private String createtime;
     private String endtime;
     private String status;
 
-    public Requires(int userid, int requireid, String title, String description, String reward, String createtime, String endtime, String status) {
+    public Requires(int userid, int requireid, String title, String description, Float reward, String createtime, String endtime, String status) {
         this.userid = userid;
         this.requireid = requireid;
         this.title = title;
@@ -60,11 +60,11 @@ public class Requires {
         this.description = description;
     }
 
-    public String getReward() {
+    public Float getReward() {
         return reward;
     }
 
-    public void setReward(String reward) {
+    public void setReward(Float reward) {
         this.reward = reward;
     }
 
