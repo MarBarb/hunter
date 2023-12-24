@@ -15,10 +15,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
             // 检查方法上是否有 @PostMapping 注解
             if (handlerMethod.hasMethodAnnotation(PostMapping.class)) {
-                // 在这里可以进行登录验证逻辑，如果用户未登录，则拦截请求
-                // 例如，可以检查用户是否具有登录的凭证（例如，session中是否有用户信息）
-
-                // 示例：检查 session 中是否有用户信息
                 Object user = request.getSession().getAttribute("user");
                 if (user == null) {
                     // 用户未登录，拦截请求

@@ -19,8 +19,6 @@ public class LoginController {
 
     @PostMapping("/login")
     public Boolean login(int userid, String password, HttpServletRequest request) {
-        // 在实际应用中，这里应该是验证用户名密码的逻辑
-        // 示例：简单的用户名密码验证
         if(Objects.equals(userController.getUserById(userid).getPassword(), password)) {
             // 登录成功，将用户信息存储到Session中
             HttpSession session = request.getSession();

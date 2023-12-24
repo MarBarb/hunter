@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lch.hunter.entity.Img;
 import com.lch.hunter.entity.Requires;
 import com.lch.hunter.mapper.RequireMapper;
+import com.lch.hunter.service.RequireService;
 import com.lch.hunter.serviceImpl.RequireServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,65 +24,56 @@ public class RequireController {
     @Autowired
     private RequireMapper requireMapper;
     private ImgController imgController;
-    private RequireServiceImpl requireService;
+    private RequireService requireService;
 
-    public RequireController(ImgController imgController, RequireServiceImpl requireService) {
+    public RequireController(ImgController imgController, RequireService requireService) {
         this.imgController = imgController;
         this.requireService = requireService;
     }
 
     // 查询所有require
-    @GetMapping("/require")
     public List<Requires> query(){
         return requireMapper.selectList(null); // 自动转换为json
     }
 
     // 分页按序号顺序查询require
-    @GetMapping("/require/findByPage/{pageNum}")
     public IPage findByPage(@PathVariable int pageNum) {
         Page<Requires> page = new Page<>(pageNum, 10); // 每页10条
         return requireMapper.selectPage(page, null);
     }
 
     // 分页按创建时间由晚到早查询require(去除过期require)
-    @GetMapping("/require/findByCreateTime/{pageNum}")
     public IPage findByCreateTimeByPage(@PathVariable int pageNum){
         return requireService.getRequiresOrderByCreateTime(pageNum, 10);
     }
 
     // 分页按截止时间由早到晚查询require(去除过期require)
-    @GetMapping("/require/findByEndTime/{pageNum}")
     public IPage findByEndTimeByPage(@PathVariable int pageNum){
         return requireService.getRequiresOrderByEndTime(pageNum, 10);
     }
 
     // 分页按reward由大到小查询require(去除过期require)
-    @GetMapping("/require/findByRewardDesc/{pageNum}")
     public IPage findByRewardByDescByPage(@PathVariable int pageNum){
         return requireService.getRequiresOrderByRewardDesc(pageNum, 10);
     }
 
     // 分页按reward由小到大查询require(去除过期require)
-    @GetMapping("/require/findByRewardAsc/{pageNum}")
     public IPage findByRewardByAscByPage(@PathVariable int pageNum){
         return requireService.getRequiresOrderByRewardAsc(pageNum, 10);
     }
 
     // 依据requireid查询require
-    @GetMapping("/require/{id}")
     public String getRequireById(@PathVariable int id){
         Requires thisRequire = requireMapper.selectById(id);
         return thisRequire.toString(); // 自动转换为json
     }
 
     // 依据用户id查询其发布的所有requires(分页，按时间，去除过期)(用于其他用户查看某个用户发布过的require)
-    @GetMapping("/require/findByUser/{userid}/{pageNum}")
     public IPage getRequireByUserByPage(@PathVariable int userid, @PathVariable int pageNum){
         return requireService.getRequiresByUserOrderByCreateTime(pageNum, 10, userid);
     }
 
     // 依据用户id查询其发布的所有requires(分页，按时间，不去除过期)(用于用户查看自己发布过的require)
-    @GetMapping("/require/findByUserSelf/{userid}/{pageNum}")
     public IPage getRequireByUserByPageWithOutDate(@PathVariable int userid, @PathVariable int pageNum){
         return requireService.getRequiresByUserOrderByCreateTimeWithOutDate(pageNum, 10, userid);
     }
