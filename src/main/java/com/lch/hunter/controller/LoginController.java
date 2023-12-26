@@ -25,7 +25,23 @@ public class LoginController {
             session.setAttribute("user", userid);
             return true;
         } else {
+            return false; // 用户不存在or用户名与密码不匹配
+        }
+    }
+
+    @PostMapping("/logout")
+    public Boolean logout(int userid, HttpServletRequest request) {
+        if(userController.getUserById(userid) != null) {
+            HttpSession session = request.getSession();
+            if((int)session.getAttribute("user") == userid){
+                session.removeAttribute("user"); // 从session中清除
+                return true;
+            } else {
+                return false;
+            }
+        } else {
             return false;
         }
     }
+
 }

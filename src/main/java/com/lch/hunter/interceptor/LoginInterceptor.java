@@ -19,7 +19,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 if (user == null) {
                     // 用户未登录，拦截请求
                     System.out.println("拦截！！！");
-                    response.sendRedirect("/login"); // 重定向到登录页面
+                    //response.sendRedirect("/login"); // 重定向到登录页面
                     return false; // 请求被拦截
                 }
             }

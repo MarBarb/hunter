@@ -29,9 +29,9 @@ public class UserController {
 
     // 添加用户(注册)
     @PostMapping("/user")
-    public User save(User user) {
+    public int save(User user) {
         userMapper.insert(user);
-        return user;
+        return user.getUserid();
     }
 
     @PutMapping("/user/modify")
