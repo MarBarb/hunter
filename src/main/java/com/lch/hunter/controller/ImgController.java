@@ -45,6 +45,7 @@ public class ImgController {
     public String save(Img img, MultipartFile photo, HttpServletRequest request) throws IOException {
         // 图片存到 "/img_file/requireid/"
         String path;
+        img.setImgid(0);
         if(img.getUserid() == NULL){
             path = request.getServletContext().getRealPath("/img_file/requires/" + img.getRequireid() + "/");
         }
