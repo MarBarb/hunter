@@ -11,7 +11,6 @@ public class Img {
     @TableId(type = IdType.AUTO)
     private int imgid;
     private int requireid;
-    private int userid; // 用户的头像
     private String imgpath;
 
     public int getImgid() {
@@ -38,13 +37,7 @@ public class Img {
         this.imgpath = imgpath;
     }
 
-    public int getUserid() {
-        return userid;
-    }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
-    }
 
     @Override
     public String toString() {
@@ -52,7 +45,6 @@ public class Img {
                 .append("imgid", imgid)
                 .append("requireid", requireid)
                 .append("imgpath", imgpath)
-                .append("userid", userid)
                 .toString();
     }
 }

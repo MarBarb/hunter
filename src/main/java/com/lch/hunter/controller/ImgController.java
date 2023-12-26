@@ -46,12 +46,7 @@ public class ImgController {
         // 图片存到 "/img_file/requireid/"
         String path;
         img.setImgid(0);
-        if(img.getUserid() == NULL){
-            path = request.getServletContext().getRealPath("/img_file/requires/" + img.getRequireid() + "/");
-        }
-        else{
-            path = request.getServletContext().getRealPath("/img_file/user/" + img.getUserid() + "/");
-        }
+        path = request.getServletContext().getRealPath("/img_file/requires/" + img.getRequireid() + "/");
         img.setImgpath(path + photo.getOriginalFilename());
         saveFile(photo, path);
         int indicator = imgMapper.insert(img);
