@@ -47,8 +47,7 @@ public class ImgController {
         String path;
         img.setImgid(0);
         path = request.getServletContext().getRealPath("/img_file/requires/" + img.getRequireid() + "/");
-
-        img.setImgpath(path + photo.getOriginalFilename());
+        img.setImgpath(photo.getOriginalFilename());
         saveFile(photo, path);
         int indicator = imgMapper.insert(img);
         if (indicator > 0) {
@@ -61,7 +60,7 @@ public class ImgController {
     // 依据id删除图片
     // 删除requires时，其包含的图片会在数据库内级联删除，同时存储此require的图片的整个目录也会被删除
     @DeleteMapping("/img/{id}")
-    public String deleteImgById(@PathVariable int id) {
+    public String deleteImgById(@PathVariable int id) throws IOException {
         Img img = imgMapper.selectById(id);
         String path = img.getImgpath();
         File file = new File(path);
