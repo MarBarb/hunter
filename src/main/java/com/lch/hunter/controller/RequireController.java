@@ -86,7 +86,7 @@ public class RequireController {
         return thisRequire.toString(); // 自动转换为json
     }
 
-    // 依据用户id查询其发布的所有requires(分页，按时间，去除过期)(用于其他用户查看某个用户发布过的require)
+    // 依据用户id查询其发布的所有requires(分页，按时间，去除过期，去除Finished)(用于其他用户查看某个用户发布过的require)
     @GetMapping("/require/findByUser/{userid}")
     public IPage getRequireByUserByPage(@PathVariable int userid,
                                         @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
@@ -94,7 +94,7 @@ public class RequireController {
         return requireService.getRequiresByUserOrderByCreateTime(pageNum, pageSize, userid);
     }
 
-    // 依据用户id查询其发布的所有requires(分页，按时间，不去除过期，不筛选已结束)(用于用户查看自己发布过的require)
+    // 依据用户id查询其发布的所有requires(分页，按时间，不去除过期，不去除Finished)(用于用户查看自己发布过的require)
     @GetMapping("/require/findByUserSelf/{userid}")
     public IPage getAllRequireByUserByPage(@PathVariable int userid,
                                            @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,

@@ -37,7 +37,7 @@ public class ImgController {
     }
 
     // 上传图片
-    // 前端需要传的参数：requireid或者userid，imgid，photo(from-data形式)。参数imgpath为空即可，由后端分自动填写
+    // 前端需要传的参数：requireid，imgid，photo(from-data形式)。参数imgpath为空即可，由后端分自动填写
     // 图片需要随机重命名
     // 图片上传完后，浏览器输入这个路径可以访问到图片源文件："localhost/requires/requireid/filename",如"localhost/requires/3/test1.jpg"
     // 本地服务器会经常变化，上传完后必须马上get才能访问。项目上线后不会出现此问题
@@ -47,11 +47,12 @@ public class ImgController {
         String path;
         img.setImgid(0);
         path = request.getServletContext().getRealPath("/img_file/requires/" + img.getRequireid() + "/");
+
         img.setImgpath(path + photo.getOriginalFilename());
         saveFile(photo, path);
         int indicator = imgMapper.insert(img);
         if (indicator > 0) {
-            return img.getImgpath(); // 返回路径.
+            return img.getImgpath(); // 返回路径
         } else {
             return "fail!\n";
         }
@@ -60,7 +61,7 @@ public class ImgController {
     // 依据id删除图片
     // 删除requires时，其包含的图片会在数据库内级联删除，同时存储此require的图片的整个目录也会被删除
     @DeleteMapping("/img/{id}")
-    public String deleteImgById(@PathVariable int id) throws IOException {
+    public String deleteImgById(@PathVariable int id) {
         Img img = imgMapper.selectById(id);
         String path = img.getImgpath();
         File file = new File(path);
