@@ -37,7 +37,7 @@ public class RequireController {
         return requireMapper.selectList(null); // 自动转换为json
     }
 
-    // 分页按序号顺序查询require
+    // 分页按序号顺序查询require(**注意：此接口不筛选且仅按数据库顺序排序，不要使用**)
     @GetMapping("/require/findByPage")
     public IPage findByPage(
             @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
@@ -47,7 +47,7 @@ public class RequireController {
         return requireMapper.selectPage(page, null);
     }
 
-    // 分页按创建时间由晚到早查询require(去除过期require)
+    // 分页按创建时间由晚到早查询require(去除过期require和status为‘Finished’的require)
     @GetMapping("/require/findByCreateTime")
     public IPage findByCreateTimeByPage(
             @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
@@ -55,7 +55,7 @@ public class RequireController {
         return requireService.getRequiresOrderByCreateTime(pageNum, pageSize);
     }
 
-    // 分页按截止时间由早到晚查询require(去除过期require)
+    // 分页按截止时间由早到晚查询require(去除过期require和status为‘Finished’的require)
     @GetMapping("/require/findByEndTime")
     public IPage findByEndTimeByPage(
             @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
@@ -63,7 +63,7 @@ public class RequireController {
         return requireService.getRequiresOrderByEndTime(pageNum, pageSize);
     }
 
-    // 分页按reward由大到小查询require(去除过期require)
+    // 分页按reward由大到小查询require(去除过期require和status为‘Finished’的require)
     @GetMapping("/require/findByRewardDesc")
     public IPage findByRewardByDescByPage(
             @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
@@ -71,7 +71,7 @@ public class RequireController {
         return requireService.getRequiresOrderByRewardDesc(pageNum, pageSize);
     }
 
-    // 分页按reward由小到大查询require(去除过期require)
+    // 分页按reward由小到大查询require(去除过期require和status为‘Finished’的require)
     @GetMapping("/require/findByRewardAsc")
     public IPage findByRewardByAscByPage(
             @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
