@@ -38,9 +38,12 @@ public class RequireController {
     }
 
     // 分页按序号顺序查询require
-    @GetMapping("/require/findByPage/{pageNum}")
-    public IPage findByPage(@PathVariable int pageNum) {
-        Page<Requires> page = new Page<>(pageNum, 10); // 每页10条
+    @GetMapping("/require/findByPage")
+    public IPage findByPage(
+            @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
+            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize
+    ) {
+        Page<Requires> page = new Page<>(pageNum, pageSize);
         return requireMapper.selectPage(page, null);
     }
 
