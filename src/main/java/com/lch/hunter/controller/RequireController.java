@@ -100,13 +100,9 @@ public class RequireController {
 
     // 添加require(发布悬赏)
     @PostMapping("/require")
-    public String save(Requires requires){
-        int indicator = requireMapper.insert(requires);
-        if(indicator>0){
-            return "success\n";
-        }else{
-            return "fail!\n";
-        }
+    public int save(Requires requires){
+        requireMapper.insert(requires);
+        return requires.getRequireid();
     }
     @PutMapping("/require/modify")
     public String modify(Requires require){
