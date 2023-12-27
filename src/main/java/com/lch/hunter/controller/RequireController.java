@@ -48,27 +48,35 @@ public class RequireController {
     }
 
     // 分页按创建时间由晚到早查询require(去除过期require)
-    @GetMapping("/require/findByCreateTime/{pageNum}")
-    public IPage findByCreateTimeByPage(@PathVariable int pageNum){
-        return requireService.getRequiresOrderByCreateTime(pageNum, 10);
+    @GetMapping("/require/findByCreateTime")
+    public IPage findByCreateTimeByPage(
+            @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
+            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize){
+        return requireService.getRequiresOrderByCreateTime(pageNum, pageSize);
     }
 
     // 分页按截止时间由早到晚查询require(去除过期require)
-    @GetMapping("/require/findByEndTime/{pageNum}")
-    public IPage findByEndTimeByPage(@PathVariable int pageNum){
-        return requireService.getRequiresOrderByEndTime(pageNum, 10);
+    @GetMapping("/require/findByEndTime")
+    public IPage findByEndTimeByPage(
+            @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
+            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize){
+        return requireService.getRequiresOrderByEndTime(pageNum, pageSize);
     }
 
     // 分页按reward由大到小查询require(去除过期require)
-    @GetMapping("/require/findByRewardDesc/{pageNum}")
-    public IPage findByRewardByDescByPage(@PathVariable int pageNum){
-        return requireService.getRequiresOrderByRewardDesc(pageNum, 10);
+    @GetMapping("/require/findByRewardDesc")
+    public IPage findByRewardByDescByPage(
+            @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
+            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize){
+        return requireService.getRequiresOrderByRewardDesc(pageNum, pageSize);
     }
 
     // 分页按reward由小到大查询require(去除过期require)
-    @GetMapping("/require/findByRewardAsc/{pageNum}")
-    public IPage findByRewardByAscByPage(@PathVariable int pageNum){
-        return requireService.getRequiresOrderByRewardAsc(pageNum, 10);
+    @GetMapping("/require/findByRewardAsc")
+    public IPage findByRewardByAscByPage(
+            @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
+            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize){
+        return requireService.getRequiresOrderByRewardAsc(pageNum, pageSize);
     }
 
     // 依据requireid查询require
@@ -79,15 +87,19 @@ public class RequireController {
     }
 
     // 依据用户id查询其发布的所有requires(分页，按时间，去除过期)(用于其他用户查看某个用户发布过的require)
-    @GetMapping("/require/findByUser/{userid}/{pageNum}")
-    public IPage getRequireByUserByPage(@PathVariable int userid, @PathVariable int pageNum){
-        return requireService.getRequiresByUserOrderByCreateTime(pageNum, 10, userid);
+    @GetMapping("/require/findByUser/{userid}")
+    public IPage getRequireByUserByPage(@PathVariable int userid,
+                                        @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
+                                        @RequestParam(name = "pageSize", defaultValue = "10") int pageSize){
+        return requireService.getRequiresByUserOrderByCreateTime(pageNum, pageSize, userid);
     }
 
-    // 依据用户id查询其发布的所有requires(分页，按时间，不去除过期)(用于用户查看自己发布过的require)
-    @GetMapping("/require/findByUserSelf/{userid}/{pageNum}")
-    public IPage getRequireByUserByPageWithOutDate(@PathVariable int userid, @PathVariable int pageNum){
-        return requireService.getRequiresByUserOrderByCreateTimeWithOutDate(pageNum, 10, userid);
+    // 依据用户id查询其发布的所有requires(分页，按时间，不去除过期，不筛选已结束)(用于用户查看自己发布过的require)
+    @GetMapping("/require/findByUserSelf/{userid}")
+    public IPage getAllRequireByUserByPage(@PathVariable int userid,
+                                           @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
+                                           @RequestParam(name = "pageSize", defaultValue = "10") int pageSize){
+        return requireService.getAllRequiresByUser(pageNum, pageSize, userid);
     }
 
     // 依据用户id查询其发布的所有requires(不分页，不按时间)(**此接口仅留给后端用**)

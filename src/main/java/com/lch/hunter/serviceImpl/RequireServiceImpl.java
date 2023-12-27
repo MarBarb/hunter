@@ -21,6 +21,7 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
         QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("createtime"); // 按照发帖时间由近到远排序
         queryWrapper.ge("endtime", new Date()); // 超出endtime的帖子会被剔除
+        queryWrapper.eq("status", "Available");
 
         // 调用 MyBatis-Plus 分页查询方法
         return baseMapper.selectPage(page, queryWrapper);
@@ -34,6 +35,7 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
         QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByAsc("endtime"); // 按照endtime由近到远排序
         queryWrapper.ge("endtime", new Date()); // 超出endtime的帖子会被剔除
+        queryWrapper.eq("status", "Available");
 
         // 调用 MyBatis-Plus 分页查询方法
         return baseMapper.selectPage(page, queryWrapper);
@@ -47,6 +49,7 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
         QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("reward"); // 按照reward从大到小排序
         queryWrapper.ge("endtime", new Date()); // 超出endtime的帖子会被剔除
+        queryWrapper.eq("status", "Available");
 
         // 调用 MyBatis-Plus 分页查询方法
         return baseMapper.selectPage(page, queryWrapper);
@@ -61,6 +64,7 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
         QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByAsc("reward"); // 按照reward从小到大排序
         queryWrapper.ge("endtime", new Date()); // 超出endtime的帖子会被剔除
+        queryWrapper.eq("status", "Available");
 
         // 调用 MyBatis-Plus 分页查询方法
         return baseMapper.selectPage(page, queryWrapper);
@@ -75,13 +79,14 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
         queryWrapper.eq("userid", userid);
         queryWrapper.orderByDesc("createtime"); // 按照发帖时间由近到远排序
         queryWrapper.ge("endtime", new Date()); // 超出endtime的帖子会被剔除
+        queryWrapper.eq("status", "Available");
 
         // 调用 MyBatis-Plus 分页查询方法
         return baseMapper.selectPage(page, queryWrapper);
     }
 
 
-    public Page<Requires> getRequiresByUserOrderByCreateTimeWithOutDate(int pageNum, int pageSize, int userid) {
+    public Page<Requires> getAllRequiresByUser(int pageNum, int pageSize, int userid) {
 
         Page<Requires> page = new Page<>(pageNum, pageSize);
 

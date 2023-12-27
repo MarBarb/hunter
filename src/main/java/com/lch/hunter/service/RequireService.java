@@ -17,5 +17,5 @@ public interface RequireService extends IService<Requires> {
 
     IPage getRequiresOrderByRewardAsc(int pageNum, int i);
 
-    IPage getRequiresByUserOrderByCreateTimeWithOutDate(int pageNum, int i, int userid);
+    IPage getAllRequiresByUser(int pageNum, int i, int userid);
 }
