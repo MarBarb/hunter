@@ -50,6 +50,14 @@ public class UserController {
         return userMapper.selectById(id); // 自动转换为json
     }
 
+    // 依据id查询user(不带敏感信息)
+    @GetMapping("/user/safe/{id}")
+    public User safeGetUserById(@PathVariable int id) {
+        User user = userMapper.selectById(id);
+        user.setPassword("password");
+        return user; // 自动转换为json
+    }
+
     // 依据id修改信息(暂时无法修改密码)
     @PutMapping("/user/{id}")
     public User update(@PathVariable int id, String username, String userdepartment, String usersemester){
