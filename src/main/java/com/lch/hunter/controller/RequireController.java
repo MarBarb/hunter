@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 
 import static org.apache.tomcat.util.http.fileupload.FileUtils.deleteDirectory;
@@ -116,6 +120,19 @@ public class RequireController {
         requireMapper.insert(requires);
         return requires.getRequireid();
     }
+
+    // 添加require(发布悬赏)(endtime不传)
+    @PostMapping("/requireByLater")
+    public int saveByLater(Requires requires, int later){
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        requires.setCreatetime(now.format(formatter));
+        requires.setEndtime(now.plusMinutes(later).format(formatter));
+        requireMapper.insert(requires);
+        return requires.getRequireid();
+    }
+
+
     @PutMapping("/require/modify")
     public String modify(Requires require){
         int indicator = requireMapper.updateById(require);
