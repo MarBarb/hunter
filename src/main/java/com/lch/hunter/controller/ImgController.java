@@ -42,10 +42,12 @@ public class ImgController {
     // 图片上传完后，浏览器输入这个路径可以访问到图片源文件："localhost/requires/requireid/filename",如"localhost/requires/3/test1.jpg"
     // 本地服务器会经常变化，上传完后必须马上get才能访问。项目上线后不会出现此问题
     @PostMapping("/img")
-    public String save(Img img, MultipartFile photo, HttpServletRequest request) throws IOException {
+    public String save(int requireid, MultipartFile photo, HttpServletRequest request) throws IOException {
         // 图片存到 "/img_file/requireid/"
         String path;
+        Img img = null;
         img.setImgid(0);
+        img.setRequireid(requireid);
         path = request.getServletContext().getRealPath("/img_file/requires/" + img.getRequireid() + "/");
         img.setImgpath(photo.getOriginalFilename());
         saveFile(photo, path);
