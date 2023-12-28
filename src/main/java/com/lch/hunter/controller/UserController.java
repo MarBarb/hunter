@@ -21,8 +21,8 @@ public class UserController {
         this.requireController = requireController;
     }
 
-    // 查询所有用户
-    @GetMapping("/user")
+    // 查询所有用户(**此函数仅供后端使用**)
+    // @GetMapping("/user")
     public List<User> query(){
         return userMapper.selectList(null); // 自动转换为json
     }
@@ -44,17 +44,11 @@ public class UserController {
         }
     }
 
-    // 依据id查询user
+    // 依据id查询user(不能返回密码)
     @GetMapping("/user/{id}")
-    public User getUserById(@PathVariable int id){
-        return userMapper.selectById(id); // 自动转换为json
-    }
-
-    // 依据id查询user(不带敏感信息)
-    @GetMapping("/user/safe/{id}")
-    public User safeGetUserById(@PathVariable int id) {
+    public User getUserById(@PathVariable int id) {
         User user = userMapper.selectById(id);
-        user.setPassword("password");
+        user.setPassword("password"); // 密码不能返回给前端
         return user; // 自动转换为json
     }
 
