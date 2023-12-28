@@ -122,8 +122,8 @@ public class RequireController {
     }
 
     // 添加require(发布悬赏)(endtime不传)
-    @PostMapping("/requireByLater")
-    public int saveByLater(Requires requires, int later){
+    @PostMapping("/requireByLater/{later}")
+    public int saveByLater(Requires requires, @PathVariable int later){
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         requires.setCreatetime(now.format(formatter));
