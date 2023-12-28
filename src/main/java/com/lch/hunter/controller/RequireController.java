@@ -132,7 +132,7 @@ public class RequireController {
         return requires.getRequireid();
     }
 
-
+    // 此处不可缺少参数
     @PutMapping("/require/modify")
     public String modify(Requires require){
         int indicator = requireMapper.updateById(require);

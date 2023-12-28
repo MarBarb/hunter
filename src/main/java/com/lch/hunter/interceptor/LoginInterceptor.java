@@ -1,6 +1,8 @@
 package com.lch.hunter.interceptor;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -14,7 +16,11 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (handler instanceof HandlerMethod handlerMethod) {
 
             // 检查方法上是否有 @PostMapping 注解
-            if (handlerMethod.hasMethodAnnotation(PostMapping.class)) {
+            if (
+                    handlerMethod.hasMethodAnnotation(PostMapping.class) ||
+                    handlerMethod.hasMethodAnnotation(PutMapping.class) ||
+                    handlerMethod.hasMethodAnnotation(DeleteMapping.class)
+            ) {
                 Object user = request.getSession().getAttribute("user");
                 if (user == null) {
                     // 用户未登录，拦截请求

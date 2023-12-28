@@ -58,6 +58,11 @@ public class ImgController {
             return "fail!\n";
         }
     }
+    @PostMapping("/img2")
+    public String save2(MultipartFile photo, HttpServletRequest request) throws IOException {
+        // 图片存到 "/img_file/requireid/"
+        return "success!!!!!!!!!";
+    }
 
     // 依据id删除图片
     // 删除requires时，其包含的图片会在数据库内级联删除，同时存储此require的图片的整个目录也会被删除
