@@ -106,13 +106,8 @@ public class RequireController {
         return requireService.getAllRequiresByUser(pageNum, pageSize, userid);
     }
 
-    // 依据用户id查询其发布的所有requires(不分页，不按时间)(**此接口仅留给后端用**)
+    // 依据用户id查询其发布的所有requires(不分页，不按时间)(**仅留给后端用**)
     // @GetMapping("/require/findByUser/{id}")
-    public List<Requires> getRequireByUser(@PathVariable int id){
-        QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("userid", id);
-        return requireMapper.selectList(queryWrapper);
-    }
 
     // 添加require(发布悬赏)
     @PostMapping("/require")
@@ -147,14 +142,6 @@ public class RequireController {
     // 删除requires时，其包含的图片会在数据库内级联删除，同时存储此require的图片的整个目录也会被删除
     @DeleteMapping("/require/{id}")
     public String deleteRequireById(@PathVariable int id) throws IOException {
-        List<Img> list = imgController.getImgByRequire(id);
-        if(!list.isEmpty()){
-            String path = list.get(0).getImgpath();
-            File file = new File(path);
-            File dir = new File(file.getParent());
-            deleteDirectory(dir);
-        }
-        requireMapper.deleteById(id);
-        return "Require " + id + " 已删除";
+        return requireService.deleteRequireById(id);
     }
 }

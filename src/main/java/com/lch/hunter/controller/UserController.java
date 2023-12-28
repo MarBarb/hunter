@@ -3,6 +3,7 @@ package com.lch.hunter.controller;
 import com.lch.hunter.entity.Requires;
 import com.lch.hunter.entity.User;
 import com.lch.hunter.mapper.UserMapper;
+import com.lch.hunter.service.RequireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,17 +16,9 @@ import java.util.Objects;
 public class UserController {
     @Autowired
     private UserMapper userMapper;
-    private RequireController requireController;
+    private RequireService requireService;
 
-    public UserController(RequireController requireController) {
-        this.requireController = requireController;
-    }
 
-    // 查询所有用户(**此函数仅供后端&测试使用**)
-    // @GetMapping("/user")
-    public List<User> query(){
-        return userMapper.selectList(null); // 自动转换为json
-    }
 
     // 添加用户(注册)
     @PostMapping("/user")
@@ -42,11 +35,6 @@ public class UserController {
         }else{
             return "fail!\n";
         }
-    }
-
-    // 依据id查询user(返回密码)
-    public User getUserByIdForPasswd(int id) {
-        return userMapper.selectById(id); // 自动转换为json
     }
 
     // 依据id查询user(不能返回密码)
@@ -77,12 +65,12 @@ public class UserController {
     // 依据id删除user(注销)
     @DeleteMapping("/user/{id}")
     public String deleteUserById(@PathVariable int id) {
-        List<Requires> list = requireController.getRequireByUser(id);
+        List<Requires> list = requireService.getRequireByUser(id);
         if(!list.isEmpty()){
             list.forEach(item->
             {
                 try {
-                    requireController.deleteRequireById(item.getRequireid());
+                    requireService.deleteRequireById(item.getRequireid());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

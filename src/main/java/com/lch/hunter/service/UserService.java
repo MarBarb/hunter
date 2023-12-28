@@ -7,4 +7,6 @@ import com.lch.hunter.entity.User;
 
 public interface UserService extends IService<User> {
     Page<User> searchUserByUsername(String keyword, int pageNum, int pageSize);
+
+    User getUserByIdForPasswd(int userid);
 }

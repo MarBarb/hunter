@@ -9,8 +9,12 @@ import com.lch.hunter.mapper.UserMapper;
 import com.lch.hunter.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Random;
+
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+    UserMapper userMapper;
     @Override
     public Page<User> searchUserByUsername(String keyword, int pageNum, int pageSize) {
         // 创建分页对象
@@ -25,5 +29,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // 调用 MyBatis-Plus 分页查询方法
         return baseMapper.selectPage(page, queryWrapper);
+    }
+
+    public String getRandomString(){
+        Random random = new Random();
+        StringBuilder builder = new StringBuilder();
+        builder.append(random.nextInt(9)+1).append(random.nextInt(9)+1).append(random.nextInt(9)+1).append(random.nextInt(9)+1);
+        return builder.toString();
+    }
+
+
+    // 依据id查询user(返回密码)
+    public User getUserByIdForPasswd(int id) {
+        return userMapper.selectById(id); // 自动转换为json
+    }
+
+    // 查询所有用户(**此函数仅供后端&测试使用**)
+    public List<User> findAll(){
+        return userMapper.selectList(null); // 自动转换为json
     }
 }

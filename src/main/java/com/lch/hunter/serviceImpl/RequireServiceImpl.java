@@ -1,18 +1,29 @@
 package com.lch.hunter.serviceImpl;
 
+import com.baomidou.mybatisplus.core.assist.ISqlRunner;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lch.hunter.controller.ImgController;
+import com.lch.hunter.entity.Img;
 import com.lch.hunter.entity.Requires;
 import com.lch.hunter.mapper.RequireMapper;
 import com.lch.hunter.service.RequireService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
+
+import static org.apache.tomcat.util.http.fileupload.FileUtils.deleteDirectory;
 
 @Service
 public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> implements RequireService {
+
+    RequireMapper requireMapper;
     @Override
     public Page<Requires> getRequiresOrderByCreateTime(int pageNum, int pageSize){
         // 创建分页对象
@@ -113,5 +124,24 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
 
         // 调用 MyBatis-Plus 分页查询方法
         return baseMapper.selectPage(page, queryWrapper);
+    }
+
+    public List<Requires> getRequireByUser(@PathVariable int id){
+        QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userid", id);
+        return requireMapper.selectList(queryWrapper);
+    }
+
+    public String deleteRequireById(@PathVariable int id) throws IOException {
+        ImgController imgController = new ImgController();
+        List<Img> list = imgController.getImgByRequire(id);
+        if(!list.isEmpty()){
+            String path = list.get(0).getImgpath();
+            File file = new File(path);
+            File dir = new File(file.getParent());
+            deleteDirectory(dir);
+        }
+        requireMapper.deleteById(id);
+        return "Require " + id + " 已删除";
     }
 }
