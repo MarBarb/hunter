@@ -13,6 +13,10 @@ public class Img {
     private int requireid;
     private String imgpath;
 
+    public Img() {
+    }
+
+
     public int getImgid() {
         return imgid;
     }
