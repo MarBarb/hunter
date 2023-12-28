@@ -27,11 +27,9 @@ import static org.apache.tomcat.util.http.fileupload.FileUtils.deleteDirectory;
 public class RequireController {
     @Autowired
     private RequireMapper requireMapper;
-    private ImgController imgController;
     private RequireService requireService;
 
-    public RequireController(ImgController imgController, RequireService requireService) {
-        this.imgController = imgController;
+    public RequireController(RequireService requireService) {
         this.requireService = requireService;
     }
 

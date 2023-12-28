@@ -31,14 +31,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return baseMapper.selectPage(page, queryWrapper);
     }
 
-    public String getRandomString(){
-        Random random = new Random();
-        StringBuilder builder = new StringBuilder();
-        builder.append(random.nextInt(9)+1).append(random.nextInt(9)+1).append(random.nextInt(9)+1).append(random.nextInt(9)+1);
-        return builder.toString();
-    }
-
-
     // 依据id查询user(返回密码)
     public User getUserByIdForPasswd(int id) {
         return userMapper.selectById(id); // 自动转换为json

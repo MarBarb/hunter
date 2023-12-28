@@ -4,6 +4,7 @@ import com.lch.hunter.entity.Requires;
 import com.lch.hunter.entity.User;
 import com.lch.hunter.mapper.UserMapper;
 import com.lch.hunter.service.RequireService;
+import com.lch.hunter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,15 +17,22 @@ import java.util.Objects;
 public class UserController {
     @Autowired
     private UserMapper userMapper;
+    private UserService userService;
     private RequireService requireService;
 
+    public UserController(UserService userService, RequireService requireService1) {
+        this.userService = userService;
+        this.requireService = requireService1;
+    }
 
-
-    // 添加用户(注册)
     @PostMapping("/user")
-    public int save(User user) {
-        userMapper.insert(user);
-        return user.getUserid();
+    public String save(User user){
+        int indicator = userMapper.insert(user);
+        if(indicator>0){
+            return "success\n";
+        }else{
+            return "fail!\n";
+        }
     }
 
     @PutMapping("/user/modify")
