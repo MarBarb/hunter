@@ -21,7 +21,7 @@ public class UserController {
         this.requireController = requireController;
     }
 
-    // 查询所有用户(**此函数仅供后端使用**)
+    // 查询所有用户(**此函数仅供后端&测试使用**)
     // @GetMapping("/user")
     public List<User> query(){
         return userMapper.selectList(null); // 自动转换为json
@@ -42,6 +42,11 @@ public class UserController {
         }else{
             return "fail!\n";
         }
+    }
+
+    // 依据id查询user(返回密码)
+    public User getUserByIdForPasswd(int id) {
+        return userMapper.selectById(id); // 自动转换为json
     }
 
     // 依据id查询user(不能返回密码)

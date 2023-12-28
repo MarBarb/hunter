@@ -24,7 +24,6 @@ public class User {
     private String usersemester;
 
     public User(){
-
     }
 
     public User(String username, int userid, String password, String userdepartment, String usersemester) {
