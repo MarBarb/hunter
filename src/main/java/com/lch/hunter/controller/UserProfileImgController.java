@@ -22,13 +22,13 @@ public class UserProfileImgController {
 
 
     // 获取用户头像
+    // 格式举例：localhost/defaultProfilePic/图片1.png
     @GetMapping("/img/profilePic")
     public UserProfileImg getProfilePic(@RequestParam int userid){
         return userProfileImgMapper.selectById(userid % 9); // 头像暂时随机、固定
     }
 
     // 上传图片
-    // 格式举例：localhost/defaultProfilePic/图片1.png
     @PostMapping("/img/profilePic")
     public boolean save(MultipartFile photo, HttpServletRequest request) throws IOException {
         UserProfileImg userProfileImg = new UserProfileImg();
