@@ -17,6 +17,10 @@ public class Requires {
     private String endtime;
     private String status;
 
+    public Requires(){
+
+    }
+
     public Requires(int userid, int requireid, String title, String description, Float reward, String createtime, String endtime, String status) {
         this.userid = userid;
         this.requireid = requireid;

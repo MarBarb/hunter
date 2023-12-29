@@ -17,6 +17,16 @@ public class UserVerify {
     @TableField(typeHandler = AESEncryptHandler.class)
     private String code;
 
+    public UserVerify() {
+    }
+
+    public UserVerify(int verifyid, String mail, String code) {
+        this.verifyid = verifyid;
+        this.mail = mail;
+        this.code = code;
+    }
+
+
     public int getVerifyid() {
         return verifyid;
     }
