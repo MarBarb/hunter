@@ -34,7 +34,11 @@ public class UserVerifyServiceImpl extends ServiceImpl<UserVerifyMapper, UserVer
         message.setFrom("hunter_signup@163.com");
         message.setTo(userMailAddress);
         message.setSentDate(new Date());
-        message.setText("您的验证码是：" + verifyCode);
+        message.setText(
+                "您的验证码是：" + verifyCode + "\n\n" +
+                "如果你没有请求此代码，可放心忽略这封电子邮件。别人可能错误地键入了你的电子邮件地址。\n\n" +
+                "谢谢！\nHunter账户团队\n"
+        );
         javaMailSender.send(message);
         return verifyCode;
     }

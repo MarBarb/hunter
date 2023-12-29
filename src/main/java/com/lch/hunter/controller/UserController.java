@@ -27,7 +27,6 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-
     @PutMapping("/user/modify")
     public String modify(User user){
         int indicator = userMapper.updateById(user);

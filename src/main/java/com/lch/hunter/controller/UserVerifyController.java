@@ -49,11 +49,4 @@ public class UserVerifyController {
             return 0;
         }
     }
-
-
-    // ***仅供测试开发用，记得删除***
-    @GetMapping("/user/getv/{id}")
-    public UserVerify getUV(@PathVariable int id){
-        return userVerifyMapper.selectById(id);
-    }
 }
