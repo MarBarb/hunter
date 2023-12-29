@@ -23,15 +23,20 @@ public class User {
 
     private String usersemester;
 
+    @TableField(typeHandler = AESEncryptHandler.class)
+    private String usermail;
+
     public User(){
+
     }
 
-    public User(String username, int userid, String password, String userdepartment, String usersemester) {
+    public User(String username, int userid, String password, String userdepartment, String usersemester, String usermail) {
         this.username = username;
         this.userid = userid;
         this.password = password;
         this.userdepartment = userdepartment;
         this.usersemester = usersemester;
+        this.usermail = usermail;
     }
 
     public String getUsername() {
@@ -75,6 +80,14 @@ public class User {
     }
 
 
+    public String getUsermail() {
+        return usermail;
+    }
+
+    public void setUsermail(String usermail) {
+        this.usermail = usermail;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
@@ -83,6 +96,7 @@ public class User {
                 .append("password", password)
                 .append("userdepartment", userdepartment)
                 .append("usersemester", usersemester)
+                .append("usermail", usermail)
                 .toString();
     }
 }

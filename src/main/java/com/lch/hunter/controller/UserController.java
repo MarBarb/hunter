@@ -15,25 +15,18 @@ import java.util.Objects;
 
 @RestController
 public class UserController {
+
     @Autowired
     private UserMapper userMapper;
     private UserService userService;
     private RequireService requireService;
 
-    public UserController(UserService userService, RequireService requireService1) {
+    public UserController(UserService userService, RequireService requireService, UserMapper userMapper) {
         this.userService = userService;
-        this.requireService = requireService1;
+        this.requireService = requireService;
+        this.userMapper = userMapper;
     }
 
-    @PostMapping("/user")
-    public String save(User user){
-        int indicator = userMapper.insert(user);
-        if(indicator>0){
-            return "success\n";
-        }else{
-            return "fail!\n";
-        }
-    }
 
     @PutMapping("/user/modify")
     public String modify(User user){

@@ -8,13 +8,19 @@ import com.lch.hunter.entity.User;
 import com.lch.hunter.mapper.UserMapper;
 import com.lch.hunter.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Random;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+
     UserMapper userMapper;
+    public UserServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
+
     @Override
     public Page<User> searchUserByUsername(String keyword, int pageNum, int pageSize) {
         // 创建分页对象
@@ -29,6 +35,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // 调用 MyBatis-Plus 分页查询方法
         return baseMapper.selectPage(page, queryWrapper);
+    }
+
+
+    public boolean saveUser(User user){
+        int indicator = userMapper.insert(user);
+        return indicator > 0;
     }
 
     // 依据id查询user(返回密码)
