@@ -2,16 +2,14 @@ package com.lch.hunter.controller;
 
 import com.lch.hunter.entity.User;
 import com.lch.hunter.entity.UserVerify;
+import com.lch.hunter.mapper.UserMapper;
 import com.lch.hunter.mapper.UserVerifyMapper;
 import com.lch.hunter.service.RequireService;
 import com.lch.hunter.service.UserService;
 import com.lch.hunter.service.UserVerifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserVerifyController {
@@ -22,9 +20,12 @@ public class UserVerifyController {
     UserVerifyService userVerifyService;
     UserService userService;
 
-    public UserVerifyController(UserService userService, UserVerifyService userVerifyService) {
+    UserMapper userMapper;
+
+    public UserVerifyController(UserService userService, UserVerifyService userVerifyService, UserMapper userMapper) {
         this.userService = userService;
         this.userVerifyService = userVerifyService;
+        this.userMapper = userMapper;
     }
 
     @PostMapping("/user")
@@ -32,7 +33,7 @@ public class UserVerifyController {
         UserVerify userVerify = new UserVerify();
         userVerify.setVerifyid(0);
         userVerify.setMail(userMailAddress);
-        String verifyCode = userVerifyService.sendSimpleMail(userMailAddress);
+        String verifyCode = userVerifyService.sendSignupVerifyMail(userMailAddress);
         userVerify.setCode(verifyCode);
         userVerifyMapper.insert(userVerify);
         return userVerify.getVerifyid();
@@ -50,8 +51,29 @@ public class UserVerifyController {
         }
     }
 
+    // 通过邮件找回密码
     @PostMapping("/user/forgetPassword")
-    public boolean changePasswdByMailVerify(){
-        return true;
+    public int changePasswdByMail(int userid) {
+        UserVerify userVerify = new UserVerify();
+        User user = userService.getUserByIdWithOutPasswd(userid);
+        userVerify.setVerifyid(0);
+        String verifyCode = userVerifyService.sendForgetPasswordVerifyMail(user.getUsermail());
+        userVerify.setCode(verifyCode);
+        userVerifyMapper.insert(userVerify);
+        return userVerify.getVerifyid(); // 此接口insert的userVerify类没有usermail
+    }
+
+    @PutMapping("/user/forgetPassword/verify")
+    public boolean changePasswdByMailVerifyAndSave(int userid, int verifyId, String userInputCode, String userInputNewPassword){
+        UserVerify userVerify = userVerifyMapper.selectById(verifyId);
+        if(userInputCode.equals(userVerify.getCode())){
+            User user = userService.getUserByIdWithOutPasswd(userid);
+            user.setPassword(userInputNewPassword);
+            userVerifyMapper.deleteById(verifyId); // 删除验证码，验证码作废
+            userMapper.updateById(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

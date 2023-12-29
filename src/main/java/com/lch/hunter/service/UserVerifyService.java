@@ -7,5 +7,6 @@ import com.lch.hunter.entity.UserVerify;
 import java.util.List;
 
 public interface UserVerifyService extends IService<UserVerify> {
-    String sendSimpleMail(String userMailAddress);
+    String sendSignupVerifyMail(String userMailAddress);
+    String sendForgetPasswordVerifyMail (String userMailAddress);
 }
