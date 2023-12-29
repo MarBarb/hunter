@@ -46,9 +46,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
 
-    public boolean saveUser(User user){
+    public int saveUser(User user){
         int indicator = userMapper.insert(user);
-        return indicator > 0;
+        return user.getUserid();
     }
 
     // 依据id查询user(返回密码)

@@ -12,7 +12,7 @@ public interface UserService extends IService<User> {
 
     User getUserByIdForPasswd(int userid);
 
-    boolean saveUser(User user);
+    int saveUser(User user);
 
     List<User> getUserByMailAddress(String userMailAddress);
 }

@@ -39,13 +39,14 @@ public class UserVerifyController {
     }
 
     @PostMapping("/user/verify")
-    public boolean verifyAndSave(User user, int verifyId, String userInputCode){
+    public int verifyAndSave(User user, int verifyId, String userInputCode){
         UserVerify userVerify = userVerifyMapper.selectById(verifyId);
         if(userInputCode.equals(userVerify.getCode())){
             user.setUsermail(userVerify.getMail());
-            return userService.saveUser(user); // 返回值为boolean
+            userVerifyMapper.deleteById(verifyId);
+            return userService.saveUser(user); // 返回值为userid
         } else {
-            return false;
+            return 0;
         }
     }
 
