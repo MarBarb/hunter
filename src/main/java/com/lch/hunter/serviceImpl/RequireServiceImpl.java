@@ -141,7 +141,7 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
 
     public boolean deleteRequireById(@PathVariable int id) throws IOException {
         List<Img> list = imgController.getImgByRequire(id);
-        if(!list.isEmpty()){
+        if(!list.isEmpty()) {
             String realPath = list.get(0).getImgrealpath();
             File file = new File(realPath);
             deleteDirectory(file);
