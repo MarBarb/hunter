@@ -47,12 +47,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     public int saveUser(User user){
-        int indicator = userMapper.insert(user);
+        userMapper.insert(user);
         return user.getUserid();
     }
 
     // 依据id查询user(返回密码)
-    public User getUserByIdForPasswd(int id) {
+    public User getUserByIdWithOutPasswd(int id) {
+        User user = userMapper.selectById(id);
+        user.setPassword("fake_password");
+        return user; // 自动转换为json
+    }
+
+    // 依据id查询user(返回密码)
+    public User getUserByIdWithPasswd(int id) {
         return userMapper.selectById(id); // 自动转换为json
     }
 

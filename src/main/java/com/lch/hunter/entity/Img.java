@@ -13,7 +13,16 @@ public class Img {
     private int requireid;
     private String imgpath;
 
+    private String imgrealpath;
+
     public Img() {
+    }
+
+    public Img(int imgid, int requireid, String imgpath, String imgrealpath) {
+        this.imgid = imgid;
+        this.requireid = requireid;
+        this.imgpath = imgpath;
+        this.imgrealpath = imgrealpath;
     }
 
 
@@ -42,6 +51,13 @@ public class Img {
     }
 
 
+    public String getImgrealpath() {
+        return imgrealpath;
+    }
+
+    public void setImgrealpath(String imgrealpath) {
+        this.imgrealpath = imgrealpath;
+    }
 
     @Override
     public String toString() {
@@ -49,6 +65,7 @@ public class Img {
                 .append("imgid", imgid)
                 .append("requireid", requireid)
                 .append("imgpath", imgpath)
+                .append("imgrealpath", imgrealpath)
                 .toString();
     }
 }

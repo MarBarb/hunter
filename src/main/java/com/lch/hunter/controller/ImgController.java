@@ -20,6 +20,10 @@ public class ImgController {
     @Autowired
     private ImgMapper imgMapper;
 
+    public ImgController(ImgMapper imgMapper) {
+        this.imgMapper = imgMapper;
+    }
+
     // 直接依据图片id查询图片
     @GetMapping("/img/{id}")
     public String getImgById(@PathVariable int id) {
@@ -44,12 +48,13 @@ public class ImgController {
     @PostMapping("/img")
     public String save(int requireid, MultipartFile photo, HttpServletRequest request) throws IOException {
         // 图片存到 "/img_file/requireid/"
-        String path;
+
         Img img = new Img();
         img.setImgid(0);
         img.setRequireid(requireid);
-        path = request.getServletContext().getRealPath("/img_file/requires/" + img.getRequireid() + "/");
+        String path = request.getServletContext().getRealPath("/img_file/requires/" + img.getRequireid() + "/");
         img.setImgpath(photo.getOriginalFilename());
+        img.setImgrealpath(path);
         saveFile(photo, path);
         int indicator = imgMapper.insert(img);
         if (indicator > 0) {

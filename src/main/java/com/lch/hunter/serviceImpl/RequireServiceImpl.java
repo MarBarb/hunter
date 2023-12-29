@@ -24,6 +24,13 @@ import static org.apache.tomcat.util.http.fileupload.FileUtils.deleteDirectory;
 public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> implements RequireService {
 
     RequireMapper requireMapper;
+    ImgController imgController;
+
+    public RequireServiceImpl(RequireMapper requireMapper, ImgController imgController) {
+        this.requireMapper = requireMapper;
+        this.imgController = imgController;
+    }
+
     @Override
     public Page<Requires> getRequiresOrderByCreateTime(int pageNum, int pageSize){
         // 创建分页对象
@@ -133,11 +140,10 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
     }
 
     public String deleteRequireById(@PathVariable int id) throws IOException {
-        ImgController imgController = new ImgController();
         List<Img> list = imgController.getImgByRequire(id);
         if(!list.isEmpty()){
-            String path = list.get(0).getImgpath();
-            File file = new File(path);
+            String realPath = list.get(0).getImgrealpath();
+            File file = new File(realPath);
             File dir = new File(file.getParent());
             deleteDirectory(dir);
         }

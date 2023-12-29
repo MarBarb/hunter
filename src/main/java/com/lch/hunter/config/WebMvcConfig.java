@@ -14,6 +14,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 //        registry.addInterceptor(new LoginInterceptor())
 //                .addPathPatterns("/require/**")
 //                .addPathPatterns("/requireByLater/**")
-//                .addPathPatterns("/user/save");
+//                .addPathPatterns("/user/save")
+//                .addPathPatterns("/user/forgetPassword")
+//                .addPathPatterns("/user/modify")
+//                .addPathPatterns("/user/changePassword")
+//                .addPathPatterns("/user/delete/**");
     }
 }

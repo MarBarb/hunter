@@ -27,44 +27,48 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @PutMapping("/user/modify")
-    public String modify(User user){
-        int indicator = userMapper.updateById(user);
-        if(indicator>0){
-            return "success\n";
-        }else{
-            return "fail!\n";
-        }
-    }
-
     // 依据id查询user(不能返回密码)
     @GetMapping("/user/{id}")
     public User getUserById(@PathVariable int id) {
-        User user = userMapper.selectById(id);
-        user.setPassword("password"); // 密码不能返回给前端
-        return user; // 自动转换为json
+        return userService.getUserByIdWithOutPasswd(id); // 返回的密码为假密码”fake_password“
     }
 
-    // 依据id修改信息(暂时无法修改密码)
-    @PutMapping("/user/{id}")
-    public User update(@PathVariable int id, String username, String userdepartment, String usersemester){
+    // 依据id修改信息
+    @PutMapping("/user/modify")
+    public boolean update(int id, String username, String userdepartment, String usersemester){
         User newUserInfo = userMapper.selectById(id);
-        if(!Objects.equals(username, "")){
-            newUserInfo.setUsername(username);
+        if(newUserInfo != null){
+            if(!Objects.equals(username, "")){
+                newUserInfo.setUsername(username);
+            }
+            if(!Objects.equals(userdepartment, "")){
+                newUserInfo.setUserdepartment(userdepartment);
+            }
+            if(!Objects.equals(usersemester, "")){
+                newUserInfo.setUsersemester(usersemester);
+            }
+            userMapper.updateById(newUserInfo);
+            return true;
+        } else {
+            return false; // 找不到这个用户
         }
-        if(!Objects.equals(userdepartment, "")){
-            newUserInfo.setUserdepartment(userdepartment);
+    }
+
+    @PutMapping("/user/changePassword")
+    public boolean updatePassword(int userid, String userInputOldPassword, String userInputNewPassword){
+        User user = userService.getUserByIdWithPasswd(userid);
+        if(user != null && Objects.equals(user.getPassword(), userInputOldPassword)){
+            user.setPassword(userInputNewPassword);
+            userMapper.updateById(user);
+            return true;
+        } else {
+            return false; // 输入的原密码不匹配or找不到这个用户
         }
-        if(!Objects.equals(usersemester, "")){
-            newUserInfo.setUsersemester(usersemester);
-        }
-        userMapper.updateById(newUserInfo);
-        return newUserInfo;
     }
 
     // 依据id删除user(注销)
-    @DeleteMapping("/user/{id}")
-    public String deleteUserById(@PathVariable int id) {
+    @DeleteMapping("/user/delete/{id}")
+    public boolean deleteUserById(@PathVariable int id) {
         List<Requires> list = requireService.getRequireByUser(id);
         if(!list.isEmpty()){
             list.forEach(item->
@@ -77,6 +81,6 @@ public class UserController {
             });
         }
         userMapper.deleteById(id);
-        return "User " + id + " 已删除";
+        return true;
     }
 }

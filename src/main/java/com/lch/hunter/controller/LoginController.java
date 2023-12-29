@@ -33,7 +33,7 @@ public class LoginController {
             return false;
         }
 
-        if(Objects.equals(userService.getUserByIdForPasswd(userid).getPassword(), password)) {
+        if(Objects.equals(userService.getUserByIdWithPasswd(userid).getPassword(), password)) {
             // 登录成功，将用户信息存储到Session中
             HttpSession session = request.getSession();
             session.setAttribute("user", userid);
@@ -49,7 +49,7 @@ public class LoginController {
 
     @PostMapping("/logout")
     public Boolean logout(int userid, HttpServletRequest request) {
-        if(userService.getUserByIdForPasswd(userid) != null) {
+        if(userService.getUserByIdWithOutPasswd(userid) != null) {
             HttpSession session = request.getSession();
             if((int)session.getAttribute("user") == userid){
                 session.removeAttribute("user"); // 从session中清除

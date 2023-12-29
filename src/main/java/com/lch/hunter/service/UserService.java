@@ -10,9 +10,11 @@ import java.util.List;
 public interface UserService extends IService<User> {
     Page<User> searchUserByUsername(String keyword, int pageNum, int pageSize);
 
-    User getUserByIdForPasswd(int userid);
+    User getUserByIdWithPasswd(int userid);
 
     int saveUser(User user);
 
     List<User> getUserByMailAddress(String userMailAddress);
+
+    User getUserByIdWithOutPasswd(int id);
 }

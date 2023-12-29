@@ -25,8 +25,8 @@ public class User {
 
     private String usermail;
 
+    // 不要删除！！！
     public User(){
-
     }
 
     public User(String username, int userid, String password, String userdepartment, String usersemester, String usermail) {

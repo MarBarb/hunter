@@ -49,4 +49,9 @@ public class UserVerifyController {
             return 0;
         }
     }
+
+    @PostMapping("/user/forgetPassword")
+    public boolean changePasswdByMailVerify(){
+        return true;
+    }
 }
