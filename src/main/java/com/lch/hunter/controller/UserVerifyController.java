@@ -39,8 +39,22 @@ public class UserVerifyController {
         return userVerify.getVerifyid();
     }
 
+//    @PostMapping("/user/verify")
+//    public int verifyAndSave(User user, int verifyId, String userInputCode){
+//        UserVerify userVerify = userVerifyMapper.selectById(verifyId);
+//        if(userInputCode.equals(userVerify.getCode())){
+//            user.setUsermail(userVerify.getMail());
+//            userVerifyMapper.deleteById(verifyId);
+//            return userService.saveUser(user); // 返回值为userid
+//        } else {
+//            return 0;
+//        }
+//    }
+
     @PostMapping("/user/verify")
-    public int verifyAndSave(User user, int verifyId, String userInputCode){
+    public int verifyAndSave(String username, String password, String userdepartment, String usersemester, int verifyId, String userInputCode){
+        User user = new User(username, 0, password, userdepartment, usersemester, "");
+
         UserVerify userVerify = userVerifyMapper.selectById(verifyId);
         if(userInputCode.equals(userVerify.getCode())){
             user.setUsermail(userVerify.getMail());
