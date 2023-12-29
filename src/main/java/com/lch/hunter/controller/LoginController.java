@@ -21,7 +21,7 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public Boolean login(String IdOrMailAddress, String password, HttpServletRequest request) {
+    public int login(String IdOrMailAddress, String password, HttpServletRequest request) {
         int userid = 0;
         if(isNumeric(IdOrMailAddress)){
             userid = Integer.parseInt(IdOrMailAddress);
@@ -30,16 +30,16 @@ public class LoginController {
         }
 
         if(userid == 0){
-            return false;
+            return 0;
         }
 
         if(Objects.equals(userService.getUserByIdWithPasswd(userid).getPassword(), password)) {
             // 登录成功，将用户信息存储到Session中
             HttpSession session = request.getSession();
             session.setAttribute("user", userid);
-            return true;
+            return userid;
         } else {
-            return false; // 用户不存在or用户名与密码不匹配
+            return 0; // 用户不存在or用户名与密码不匹配
         }
     }
 
