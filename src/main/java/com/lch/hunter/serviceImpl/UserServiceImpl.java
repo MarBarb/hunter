@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lch.hunter.entity.Requires;
 import com.lch.hunter.entity.User;
+import com.lch.hunter.entity.UserVerify;
 import com.lch.hunter.mapper.UserMapper;
 import com.lch.hunter.service.UserService;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // 调用 MyBatis-Plus 分页查询方法
         return baseMapper.selectPage(page, queryWrapper);
+    }
+
+
+    public List<User> getUserByMailAddress(String userMailAddress){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("usermail", userMailAddress);
+        return userMapper.selectList(queryWrapper);
     }
 
 

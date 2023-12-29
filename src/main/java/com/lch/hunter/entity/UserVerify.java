@@ -12,7 +12,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class UserVerify {
     @TableId(type= IdType.AUTO)
     private int verifyid;
-    @TableField(typeHandler = AESEncryptHandler.class)
     private String mail;
     @TableField(typeHandler = AESEncryptHandler.class)
     private String code;

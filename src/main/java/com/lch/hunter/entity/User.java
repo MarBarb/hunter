@@ -23,7 +23,6 @@ public class User {
 
     private String usersemester;
 
-    @TableField(typeHandler = AESEncryptHandler.class)
     private String usermail;
 
     public User(){
