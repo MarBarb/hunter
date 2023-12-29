@@ -139,15 +139,14 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
         return requireMapper.selectList(queryWrapper);
     }
 
-    public String deleteRequireById(@PathVariable int id) throws IOException {
+    public boolean deleteRequireById(@PathVariable int id) throws IOException {
         List<Img> list = imgController.getImgByRequire(id);
         if(!list.isEmpty()){
             String realPath = list.get(0).getImgrealpath();
             File file = new File(realPath);
-            File dir = new File(file.getParent());
-            deleteDirectory(dir);
+            deleteDirectory(file);
         }
         requireMapper.deleteById(id);
-        return "Require " + id + " 已删除";
+        return true;
     }
 }

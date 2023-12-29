@@ -23,5 +23,5 @@ public interface RequireService extends IService<Requires> {
     IPage getAllRequiresByUser(int pageNum, int i, int userid);
     List<Requires> getRequireByUser(int id);
 
-    String deleteRequireById(int requireid) throws IOException;
+    boolean deleteRequireById(int requireid) throws IOException;
 }

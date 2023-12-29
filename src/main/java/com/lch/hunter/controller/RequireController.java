@@ -139,7 +139,7 @@ public class RequireController {
     // 依据id删除
     // 删除requires时，其包含的图片会在数据库内级联删除，同时存储此require的图片的整个目录也会被删除
     @DeleteMapping("/require/{id}")
-    public String deleteRequireById(@PathVariable int id) throws IOException {
+    public boolean deleteRequireById(@PathVariable int id) throws IOException {
         return requireService.deleteRequireById(id);
     }
 }
