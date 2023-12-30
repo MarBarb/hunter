@@ -21,14 +21,14 @@ public class SearchController {
         this.userService = userService;
     }
 
-    @GetMapping("/search/require/{pageNum}") // localhost/search/require/1?keyword=博雅楼
+    @GetMapping("/search/require") // localhost/search/require/1?keyword=博雅楼
     public Page<Requires> searchRequire(@RequestParam String keyword,
                                         @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
                                         @RequestParam(name = "pageSize", defaultValue = "10") int pageSize) {
         return requireService.searchRequireByDescription(keyword, pageNum, pageSize);
     }
 
-    @GetMapping("/search/user/{pageNum}") // localhost/search/user/1?keyword=Admin_1
+    @GetMapping("/search/user") // localhost/search/user/1?keyword=Admin_1
     public Page<User> searchUser(@RequestParam String keyword,
                                  @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
                                  @RequestParam(name = "pageSize", defaultValue = "10") int pageSize) {
