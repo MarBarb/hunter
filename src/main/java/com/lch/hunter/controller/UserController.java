@@ -35,7 +35,7 @@ public class UserController {
 
     // 依据id修改信息
     @PutMapping("/user/modify")
-    public boolean update(int id, String username, String userdepartment, String usersemester){
+    public boolean update(int id, String username, String userdepartment, String usersemester) {
         User newUserInfo = userMapper.selectById(id);
         if(newUserInfo != null){
             if(!Objects.equals(username, "")){

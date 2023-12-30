@@ -124,12 +124,12 @@ public class RequireServiceImpl extends ServiceImpl<RequireMapper, Requires> imp
 
         // 创建查询条件构造器
         QueryWrapper<Requires> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByDesc("createtime"); // 按照发帖时间由近到远排序
         queryWrapper.ge("endtime", LocalDateTime.now()); // 超出endtime的帖子会被剔除
         queryWrapper.eq("status", "Available");
 
         // 添加搜索条件，模糊匹配帖子内容
-        queryWrapper.like("description", keyword);
+        queryWrapper.like("description", keyword).or().like("title", keyword);
+        queryWrapper.orderByDesc("createtime"); // 按照发帖时间由近到远排序
 
         // 调用 MyBatis-Plus 分页查询方法
         return baseMapper.selectPage(page, queryWrapper);

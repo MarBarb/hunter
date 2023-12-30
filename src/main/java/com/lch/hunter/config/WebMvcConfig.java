@@ -11,13 +11,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册拦截器，并指定拦截的路径
-//        registry.addInterceptor(new LoginInterceptor())
-//                .addPathPatterns("/require/**")
-//                .addPathPatterns("/requireByLater/**")
-//                .addPathPatterns("/user/save")
-//                .addPathPatterns("/user/forgetPassword")
-//                .addPathPatterns("/user/modify")
-//                .addPathPatterns("/user/changePassword")
-//                .addPathPatterns("/user/delete/**");
+        registry.addInterceptor(new LoginInterceptor())
+                .addPathPatterns("/user/forgetPassword")
+                .addPathPatterns("/user/changePassword");
     }
 }
