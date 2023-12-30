@@ -27,7 +27,7 @@ public class UserProfileImgController {
     @GetMapping("/img/profilePic")
     public UserProfileImg getProfilePic(@RequestParam int userid){
         // 头像暂时随机、固定
-        return userProfileImgMapper.selectById((userid % 9) + 1); // 返回值是头像图片的文件名
+        return userProfileImgMapper.selectById((userid % 20) + 1); // 返回值是头像图片的文件名
     }
 
     // 上传头像
